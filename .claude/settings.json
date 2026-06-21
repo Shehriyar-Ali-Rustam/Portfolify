@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Skill(run)",
+      "Skill(run:*)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:5173)",
+      "Bash(curl -s http://localhost:5174/)",
+      "Bash(git -C \"/home/shehriyar-ali-rustam/ALL PROJECTS/portfolify\" rev-parse --show-toplevel)"
+    ]
+  }
+}
