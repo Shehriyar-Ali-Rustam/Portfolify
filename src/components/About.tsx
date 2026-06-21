@@ -1,21 +1,21 @@
-import { Code2, Palette, Zap, ArrowRight } from 'lucide-react';
+import { Brain, Trophy, Star, ArrowRight } from 'lucide-react';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 
 const highlights = [
   {
-    icon: Code2,
-    title: 'Clean Code',
-    description: 'Writing maintainable, scalable, and efficient code',
+    icon: Brain,
+    title: 'AI & ML Developer',
+    description: 'Building production-ready AI/ML solutions with Python, TensorFlow, and NLP frameworks',
   },
   {
-    icon: Palette,
-    title: 'Creative Design',
-    description: 'Crafting beautiful user experiences and interfaces',
+    icon: Trophy,
+    title: 'Hackathon 2nd Place',
+    description: 'Competed against 190+ teams from 25+ universities at CUST Hackathon 2026',
   },
   {
-    icon: Zap,
-    title: 'Performance',
-    description: 'Optimizing for speed and seamless interactions',
+    icon: Star,
+    title: 'Level One Fiverr Seller',
+    description: '100+ completed projects with a 5-star rating for global clients',
   },
 ];
 
@@ -43,20 +43,21 @@ export default function About() {
           <div className="space-y-6">
             <p className="text-lg text-muted-foreground leading-relaxed">
               I'm <span className="text-primary font-medium">Shehriyar Ali Rustam</span>,
-              a passionate developer and designer based in Pakistan. Currently pursuing my
-              Bachelor's degree in Computer Science at Capital University of Science and Technology.
+              a Software Engineer and AI/ML Developer skilled in building production-ready
+              AI, machine learning, and full-stack solutions based in Pakistan.
             </p>
             <p className="text-muted-foreground leading-relaxed">
-              I specialize in <span className="text-foreground">AI & Machine Learning</span>,
-              <span className="text-foreground"> Web Development</span>, and
-              <span className="text-foreground"> Graphic Design</span>. My journey in tech
-              started with curiosity and has evolved into a passion for building innovative
-              solutions that make a difference.
+              Currently pursuing my <span className="text-foreground">Bachelor's in Software Engineering</span> at
+              Capital University of Science and Technology (CGPA: 3.63/4.0), I specialize in
+              <span className="text-foreground"> AI & Machine Learning</span>,
+              <span className="text-foreground"> NLP</span>, and
+              <span className="text-foreground"> Full-Stack Web Development</span> with hands-on
+              internship experience and a proven track record in end-to-end product development.
             </p>
             <p className="text-muted-foreground leading-relaxed">
-              When I'm not coding, you'll find me exploring new technologies, contributing to
-              open-source projects, or working on freelance projects. I believe in continuous
-              learning and pushing the boundaries of what's possible.
+              My research on an Autonomous Solar Vehicle has been accepted for publication in the
+              International Journal of Innovations in Science & Technology (IJIST), aligned with
+              the UN Sustainable Development Goals.
             </p>
 
             <a

@@ -1,22 +1,41 @@
-import { GraduationCap } from 'lucide-react';
+import { GraduationCap, Award } from 'lucide-react';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 
 const educationData = [
   {
-    degree: "Bachelor in Software Engineering",
-    institution: 'Capital University of Science and Technology Islamabad | CUST',
-    period: '2022 - 2026',
-    description: 'Continued...',
+    degree: 'Bachelor of Science in Software Engineering',
+    institution: 'Capital University of Science and Technology (CUST), Islamabad',
+    period: 'Sep 2022 – Aug 2026 (Expected)',
+    description: 'CGPA: 3.63 / 4.0',
     current: true,
     image: '/images/educat/university.jpg',
   },
   {
-    degree: 'SSC & HSSC | Pre-Engineering',
-    institution: 'Aga Khan Higher Secondary School Chitral | AKHSS',
-    period: '2016 - 2021',
+    degree: 'SSC & HSSC — Pre-Engineering',
+    institution: 'Aga Khan Higher Secondary School Chitral (AKHSS)',
+    period: '2016 – 2021',
     description: 'Completed',
     current: false,
     image: '/images/educat/college.jpeg',
+  },
+];
+
+const awards = [
+  {
+    title: "Dean's Honour Roll",
+    detail: '5 times at CUST for outstanding academic performance',
+  },
+  {
+    title: '2nd Place — Hackathon 2026',
+    detail: 'Competing against 190+ teams from 25+ universities at CUST',
+  },
+  {
+    title: 'Research Publication (IJIST)',
+    detail: 'Autonomous Solar Vehicle paper accepted in the International Journal of Innovations in Science & Technology, aligned with UN SDGs',
+  },
+  {
+    title: 'Level One Seller — Fiverr',
+    detail: '5-star rating across 100+ completed projects for global clients',
   },
 ];
 
@@ -75,14 +94,44 @@ export default function Education() {
                           )}
                         </div>
                         <p className="text-primary font-medium mb-1">{edu.institution}</p>
-                        <p className="text-muted-foreground text-sm mb-3">{edu.period}</p>
-                        <p className="text-muted-foreground text-sm">{edu.description}</p>
+                        <p className="text-muted-foreground text-sm mb-1">{edu.period}</p>
+                        <p className="text-muted-foreground text-sm font-medium">{edu.description}</p>
                       </div>
                     </div>
                   </div>
                 </div>
 
                 <div className="hidden md:block flex-1" />
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Honours & Awards */}
+        <div className="mt-20">
+          <div className="text-center mb-10">
+            <h3 className="text-2xl font-heading font-bold">
+              Honours & <span className="gradient-text">Awards</span>
+            </h3>
+          </div>
+          <div
+            className={`grid sm:grid-cols-2 gap-6 max-w-4xl mx-auto ${
+              isVisible ? 'reveal visible' : 'reveal'
+            }`}
+          >
+            {awards.map((award, index) => (
+              <div
+                key={award.title}
+                className="glass-card p-6 flex items-start gap-4 card-hover"
+                style={{ transitionDelay: `${index * 100 + 300}ms` }}
+              >
+                <div className="w-10 h-10 rounded-xl gradient-primary flex items-center justify-center flex-shrink-0">
+                  <Award size={20} className="text-white" />
+                </div>
+                <div>
+                  <h4 className="font-heading font-semibold mb-1">{award.title}</h4>
+                  <p className="text-muted-foreground text-sm">{award.detail}</p>
+                </div>
               </div>
             ))}
           </div>

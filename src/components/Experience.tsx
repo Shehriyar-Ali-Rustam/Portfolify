@@ -3,34 +3,37 @@ import { useScrollReveal } from '../hooks/useScrollReveal';
 
 const experienceData = [
   {
-    title: 'AI/ML | Internship',
-    company: 'NAVTTC High Impact Youth Program | Government of Pakistan',
-    period: 'March 2024 - July 2024',
+    title: 'Machine Learning & Data Science Intern',
+    company: 'Ezitech Institute',
+    location: 'Islamabad, Pakistan',
+    period: 'Jul 2025 – Sep 2025',
     type: 'internship',
+    bullets: [
+      'Developed Python-based ML projects including fraud detection and recommendation systems, handling data preprocessing, cleaning, and algorithm testing for real-world applications.',
+      'Built and deployed APIs and interactive Streamlit apps, collaborated on debugging and optimization, and documented projects on GitHub.',
+    ],
   },
   {
-    title: 'Graphic Designer',
+    title: 'AI & Machine Learning Intern',
+    company: 'NAVTTC High Impact Youth Program',
+    location: 'Islamabad, Pakistan',
+    period: 'Mar 2025 – Jul 2025',
+    type: 'internship',
+    bullets: [
+      'Completed hands-on AI/ML training building supervised/unsupervised models, NLP tasks, and neural networks using Python, Scikit-Learn, and TensorFlow.',
+      'Implemented practical AI solutions including text preprocessing, sentiment analysis, and language modeling with real-world datasets and ML pipeline deployment.',
+    ],
+  },
+  {
+    title: 'Freelance Graphic Designer & Web Developer',
     company: 'Fiverr',
-    period: 'Sep 2022 - Present',
+    location: 'Remote',
+    period: 'Sep 2021 – Present',
     type: 'current',
-  },
-  {
-    title: 'Web Developer | Internship',
-    company: 'Programmer Tech',
-    period: 'June 2024 - Aug 2024',
-    type: 'internship',
-  },
-  {
-    title: 'Graphic Designer | Remote',
-    company: 'IYRP 2026',
-    period: 'Jan 2021 - Present',
-    type: 'current',
-  },
-  {
-    title: 'Android App Developer | Self-Placed',
-    company: 'Self-Employed',
-    period: 'March 2025 - Present',
-    type: 'current',
+    bullets: [
+      'Completed 100+ high-quality graphic and web design projects for global clients, maintaining a 5-star rating and earning Level One Seller status.',
+      'Delivered responsive websites and custom visuals using HTML, CSS, WordPress, Photoshop, and Canva, consistently meeting client deadlines.',
+    ],
   },
 ];
 
@@ -72,7 +75,7 @@ export default function Experience() {
                   }`}
                 >
                   <div
-                    className={`glass-card p-6 inline-block text-left ${
+                    className={`glass-card p-6 inline-block text-left w-full ${
                       exp.type === 'current' ? 'glow' : ''
                     }`}
                   >
@@ -81,7 +84,7 @@ export default function Experience() {
                         <Briefcase size={24} className="text-white" />
                       </div>
                       <div className="flex-1">
-                        <div className="flex items-center gap-3 mb-2 flex-wrap">
+                        <div className="flex items-center gap-3 mb-1 flex-wrap">
                           <h3 className="font-heading font-semibold text-lg">
                             {exp.title}
                           </h3>
@@ -91,8 +94,18 @@ export default function Experience() {
                             </span>
                           )}
                         </div>
-                        <p className="text-primary font-medium mb-1">{exp.company}</p>
-                        <p className="text-muted-foreground text-sm">{exp.period}</p>
+                        <p className="text-primary font-medium">{exp.company}</p>
+                        <p className="text-muted-foreground text-xs mb-3">
+                          {exp.location} · {exp.period}
+                        </p>
+                        <ul className="space-y-1">
+                          {exp.bullets.map((b, i) => (
+                            <li key={i} className="text-muted-foreground text-sm flex gap-2">
+                              <span className="text-primary mt-1 flex-shrink-0">•</span>
+                              <span>{b}</span>
+                            </li>
+                          ))}
+                        </ul>
                       </div>
                     </div>
                   </div>

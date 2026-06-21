@@ -119,7 +119,7 @@ export default function Hero() {
                 <img
                   src="/images/profile_2.png"
                   alt="Shehriyar Ali Rustam"
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover object-top"
                 />
               </div>
               <div className="absolute inset-0 rounded-full border-2 border-primary/30 animate-pulse-glow" />

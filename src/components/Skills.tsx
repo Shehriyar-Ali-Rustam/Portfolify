@@ -1,22 +1,22 @@
 import { useScrollReveal } from '../hooks/useScrollReveal';
 
 const skillsData = [
-  { name: 'Python', level: 90, category: 'Programming' },
-  { name: 'Machine Learning', level: 85, category: 'AI/ML' },
-  { name: 'Data Science', level: 82, category: 'AI/ML' },
-  { name: 'Deep Learning', level: 78, category: 'AI/ML' },
-  { name: 'HTML/CSS', level: 90, category: 'Frontend' },
-  { name: 'JavaScript', level: 85, category: 'Frontend' },
-  { name: 'React', level: 80, category: 'Frontend' },
-  { name: 'Tailwind CSS', level: 88, category: 'Frontend' },
-  { name: 'Streamlit', level: 85, category: 'Tools' },
-  { name: 'Flask', level: 75, category: 'Backend' },
-  { name: 'Git & GitHub', level: 85, category: 'Tools' },
-  { name: 'Graphic Design', level: 80, category: 'Design' },
-  { name: 'UI/UX Design', level: 75, category: 'Design' },
-  { name: 'Figma', level: 78, category: 'Design' },
-  { name: 'SQL', level: 80, category: 'Database' },
+  { name: 'Python', level: 92, category: 'Languages' },
+  { name: 'Machine Learning', level: 88, category: 'AI / ML' },
+  { name: 'Deep Learning', level: 82, category: 'AI / ML' },
+  { name: 'NLP', level: 85, category: 'AI / ML' },
+  { name: 'TensorFlow / Keras', level: 80, category: 'AI / ML' },
+  { name: 'Scikit-Learn', level: 88, category: 'AI / ML' },
+  { name: 'JavaScript', level: 85, category: 'Languages' },
+  { name: 'React', level: 82, category: 'Frontend' },
+  { name: 'HTML / CSS', level: 92, category: 'Frontend' },
+  { name: 'FastAPI / Flask', level: 80, category: 'Backend' },
+  { name: 'Streamlit', level: 88, category: 'Tools' },
+  { name: 'Git & GitHub', level: 88, category: 'Tools' },
+  { name: 'Firebase', level: 78, category: 'Database' },
+  { name: 'REST APIs', level: 85, category: 'Backend' },
   { name: 'WordPress', level: 82, category: 'CMS' },
+  { name: 'C++', level: 75, category: 'Languages' },
 ];
 
 export default function Skills() {
@@ -70,18 +70,21 @@ export default function Skills() {
             </h3>
             <div className="flex flex-wrap justify-center gap-3">
               {[
-                'NumPy',
+                'spaCy',
+                'NLTK',
+                'Prompt Engineering',
+                'MLOps',
+                'Model Training & Evaluation',
+                'Microservices',
                 'Pandas',
-                'Scikit-learn',
-                'TensorFlow',
+                'NumPy',
                 'OpenCV',
-                'NLP',
-                'Bootstrap',
-                'REST APIs',
-                'Linux',
-                'VS Code',
                 'Jupyter',
                 'Google Colab',
+                'Linux',
+                'Figma',
+                'Photoshop',
+                'Canva',
               ].map((tech, index) => (
                 <span
                   key={tech}
