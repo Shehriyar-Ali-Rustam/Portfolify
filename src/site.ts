@@ -10,8 +10,8 @@ export const GITHUB_URL = 'https://github.com/Shehriyar-Ali-Rustam';
 export const LINKEDIN_URL = 'https://www.linkedin.com/in/shehriyar-ali-rustam/';
 export const LOCATION = 'Islamabad, Pakistan';
 
-// TODO(portfolio): add your academic CV at public/cv/CV_Shehriyar_Ali_Rustam.pdf (exact filename).
-// Every "Download CV" button points here, so they stay broken until that file exists.
+// CV served from public/cv/. To update it, replace that file and keep the filename.
+// Keep your phone number out of it: anything in public/ is downloadable by anyone.
 export const CV_URL = '/cv/CV_Shehriyar_Ali_Rustam.pdf';
 
 export const PAPER_DOI = '10.33411/IJIST/1807';
