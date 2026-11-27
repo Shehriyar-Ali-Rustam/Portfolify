@@ -1,95 +1,41 @@
-import { Brain, Trophy, Star, ArrowRight } from 'lucide-react';
-import { useScrollReveal } from '../hooks/useScrollReveal';
+import Section from './Section';
 
-const highlights = [
-  {
-    icon: Brain,
-    title: 'AI & ML Developer',
-    description: 'Building production-ready AI/ML solutions with Python, TensorFlow, and NLP frameworks',
-  },
-  {
-    icon: Trophy,
-    title: 'Hackathon 2nd Place',
-    description: 'Competed against 190+ teams from 25+ universities at CUST Hackathon 2026',
-  },
-  {
-    icon: Star,
-    title: 'Level One Fiverr Seller',
-    description: '100+ completed projects with a 5-star rating for global clients',
-  },
+const researchInterests = [
+  'Computer vision for autonomous systems',
+  'Efficient / edge AI and model compression',
+  'Robotics (ROS2)',
+  'NLP and LLM evaluation',
+  'Retrieval and sentence embeddings',
 ];
 
 export default function About() {
-  const { ref, isVisible } = useScrollReveal();
-
   return (
-    <section id="about" className="section relative overflow-hidden">
-      <div className="container mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="section-title">
-            About <span className="gradient-text">Me</span>
-          </h2>
-          <p className="section-subtitle">
-            Get to know me better
-          </p>
-        </div>
-
-        <div
-          ref={ref}
-          className={`grid lg:grid-cols-2 gap-12 items-center ${
-            isVisible ? 'reveal visible' : 'reveal'
-          }`}
-        >
-          <div className="space-y-6">
-            <p className="text-lg text-muted-foreground leading-relaxed">
-              I'm <span className="text-primary font-medium">Shehriyar Ali Rustam</span>,
-              a Software Engineer and AI/ML Developer skilled in building production-ready
-              AI, machine learning, and full-stack solutions based in Pakistan.
-            </p>
-            <p className="text-muted-foreground leading-relaxed">
-              Currently pursuing my <span className="text-foreground">Bachelor's in Software Engineering</span> at
-              Capital University of Science and Technology (CGPA: 3.63/4.0), I specialize in
-              <span className="text-foreground"> AI & Machine Learning</span>,
-              <span className="text-foreground"> NLP</span>, and
-              <span className="text-foreground"> Full-Stack Web Development</span> with hands-on
-              internship experience and a proven track record in end-to-end product development.
-            </p>
-            <p className="text-muted-foreground leading-relaxed">
-              My research on an Autonomous Solar Vehicle has been accepted for publication in the
-              International Journal of Innovations in Science & Technology (IJIST), aligned with
-              the UN Sustainable Development Goals.
-            </p>
-
-            <a
-              href="#contact"
-              className="inline-flex items-center gap-2 text-primary font-medium hover:gap-4 transition-all group"
-            >
-              Let's work together
-              <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
-            </a>
-          </div>
-
-          <div className="grid gap-6">
-            {highlights.map((item, index) => (
-              <div
-                key={item.title}
-                className={`glass-card p-6 flex items-start gap-4 card-hover ${
-                  isVisible ? 'reveal visible' : 'reveal'
-                }`}
-                style={{ transitionDelay: `${index * 100}ms` }}
-              >
-                <div className="w-12 h-12 rounded-xl gradient-primary flex items-center justify-center flex-shrink-0">
-                  <item.icon size={24} className="text-white" />
-                </div>
-                <div>
-                  <h3 className="font-heading font-semibold text-lg mb-1">{item.title}</h3>
-                  <p className="text-muted-foreground text-sm">{item.description}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+    <Section id="about" title="About">
+      <div className="prose-width space-y-4 text-base leading-relaxed text-foreground/85 md:text-[1.0625rem]">
+        <p>
+          I graduated in July 2026 with a BS in Software Engineering from Capital University of Science and Technology
+          (CUST), Islamabad, with a CGPA of 3.66/4.00 and a final-year GPA of 3.81. My final-year research project was a
+          low-cost, solar-powered autonomous vehicle for campus and community transport: I collected and annotated a
+          10,000+ image campus dataset, trained a YOLOv8-Nano detector, and integrated perception with ROS2, ultrasonic
+          sensing and GPS navigation on a Raspberry Pi 4. The work was published in IJIST (2026), with me as first
+          author.
+        </p>
+        <p>
+          The main lesson was the gap between accuracy and deployability: the detector ran at 0.8 FPS on the Pi versus
+          28 FPS on a laptop. That is the problem I want to study in a master’s programme: efficient, uncertainty-aware
+          perception for autonomous systems on constrained hardware. I also work on NLP and LLM evaluation, and have
+          built semantic matching, text classification and prompt-benchmarking tools.
+        </p>
       </div>
-    </section>
+
+      <h3 className="mt-8 text-base font-semibold">Research interests</h3>
+      <ul className="mt-3 flex flex-wrap gap-2">
+        {researchInterests.map((interest) => (
+          <li key={interest} className="rounded-md border bg-card px-3 py-1.5 text-sm">
+            {interest}
+          </li>
+        ))}
+      </ul>
+    </Section>
   );
 }

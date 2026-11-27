@@ -1,32 +1,31 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { ArrowUp } from 'lucide-react';
 
 export default function ScrollToTop() {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    const toggleVisibility = () => {
-      setIsVisible(window.scrollY > 300);
-    };
-
-    window.addEventListener('scroll', toggleVisibility);
-    return () => window.removeEventListener('scroll', toggleVisibility);
+    const onScroll = () => setIsVisible(window.scrollY > 600);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
   const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth',
-    });
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    window.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' });
   };
+
+  if (!isVisible) return null;
 
   return (
     <button
+      type="button"
       onClick={scrollToTop}
-      className={`scroll-top ${isVisible ? 'visible' : ''}`}
-      aria-label="Scroll to top"
+      className="fixed bottom-5 right-5 z-40 inline-flex h-11 w-11 items-center justify-center rounded-full border bg-card text-foreground shadow-lg transition-colors hover:bg-secondary"
     >
-      <ArrowUp size={24} className="text-white" />
+      <span className="sr-only">Back to top</span>
+      <ArrowUp size={20} aria-hidden />
     </button>
   );
 }

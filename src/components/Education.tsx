@@ -1,142 +1,76 @@
-import { GraduationCap, Award } from 'lucide-react';
-import { useScrollReveal } from '../hooks/useScrollReveal';
+import Section from './Section';
 
-const educationData = [
-  {
-    degree: 'Bachelor of Science in Software Engineering',
-    institution: 'Capital University of Science and Technology (CUST), Islamabad',
-    period: 'Sep 2022 – Aug 2026 (Expected)',
-    description: 'CGPA: 3.63 / 4.0',
-    current: true,
-    image: '/images/educat/university.jpg',
-  },
-  {
-    degree: 'SSC & HSSC — Pre-Engineering',
-    institution: 'Aga Khan Higher Secondary School Chitral (AKHSS)',
-    period: '2016 – 2021',
-    description: 'Completed',
-    current: false,
-    image: '/images/educat/college.jpeg',
-  },
+const relevantCoursework = [
+  'Calculus & Analytical Geometry',
+  'Probability & Statistics',
+  'Discrete Structures',
+  'Applied Physics',
+  'Software Architecture & Design',
+  'Database Systems',
+  'Computer Networks',
+  'Cloud Computing',
+  'Formal Methods',
+  'Software Quality Engineering',
+  'Technical Report Writing',
 ];
 
-const awards = [
-  {
-    title: "Dean's Honour Roll",
-    detail: '5 times at CUST for outstanding academic performance',
-  },
-  {
-    title: '2nd Place — Hackathon 2026',
-    detail: 'Competing against 190+ teams from 25+ universities at CUST',
-  },
-  {
-    title: 'Research Publication (IJIST)',
-    detail: 'Autonomous Solar Vehicle paper accepted in the International Journal of Innovations in Science & Technology, aligned with UN SDGs',
-  },
-  {
-    title: 'Level One Seller — Fiverr',
-    detail: '5-star rating across 100+ completed projects for global clients',
-  },
-];
+const alsoCompleted = ['Artificial Intelligence', 'Data Structures', 'Linear Algebra', 'Operating Systems', 'Simulation & Modeling'];
 
 export default function Education() {
-  const { ref, isVisible } = useScrollReveal();
-
   return (
-    <section id="education" className="section relative overflow-hidden">
-      <div className="container mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="section-title">
-            My <span className="gradient-text">Education</span>
-          </h2>
-          <p className="section-subtitle">
-            Academic journey and qualifications
+    <Section id="education" title="Education">
+      <div className="space-y-6">
+        <article className="card">
+          <h3 className="text-lg font-semibold">BS Software Engineering</h3>
+          <p className="mt-1 text-sm text-muted-foreground">
+            Capital University of Science and Technology (CUST), Islamabad, Pakistan · Sep 2022 to Jul 2026 (degree
+            completed 15 July 2026)
           </p>
-        </div>
 
-        <div ref={ref} className="relative max-w-4xl mx-auto">
-          <div className="hidden md:block timeline-line" />
+          <ul className="prose-width mt-4 list-disc space-y-1.5 pl-5 text-sm leading-relaxed text-foreground/85 marker:text-muted-foreground sm:text-base">
+            <li>
+              CGPA <strong className="font-semibold text-foreground">3.66 / 4.00</strong> (130 credits) · final-year GPA{' '}
+              <strong className="font-semibold text-foreground">3.81</strong> (Fall 2025: 3.73, Spring 2026: 3.92)
+            </li>
+            <li>Dean’s Honour Roll ×5</li>
+            <li>
+              HEC-recognised, English-medium; full degree taught and examined in English (CUST English Proficiency
+              Certificate, Nov 2026)
+            </li>
+            <li>Final-year project: Part I A−, Part II A</li>
+          </ul>
 
-          <div className="space-y-12">
-            {educationData.map((edu, index) => (
-              <div
-                key={edu.degree}
-                className={`relative flex flex-col md:flex-row items-center gap-8 ${
-                  index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'
-                } ${isVisible ? 'reveal visible' : 'reveal'}`}
-                style={{ transitionDelay: `${index * 150}ms` }}
-              >
-                <div className="hidden md:block timeline-dot" style={{ top: '2rem' }} />
-
-                <div
-                  className={`flex-1 ${
-                    index % 2 === 0 ? 'md:text-right md:pr-12' : 'md:text-left md:pl-12'
-                  }`}
-                >
-                  <div
-                    className={`glass-card p-6 inline-block text-left ${
-                      edu.current ? 'glow' : ''
-                    }`}
-                  >
-                    <div className="flex items-start gap-4">
-                      <div className="w-12 h-12 rounded-xl gradient-primary flex items-center justify-center flex-shrink-0">
-                        <GraduationCap size={24} className="text-white" />
-                      </div>
-                      <div>
-                        <div className="flex items-center gap-3 mb-2">
-                          <h3 className="font-heading font-semibold text-lg">
-                            {edu.degree}
-                          </h3>
-                          {edu.current && (
-                            <span className="px-3 py-1 text-xs font-medium rounded-full gradient-primary text-white">
-                              Current
-                            </span>
-                          )}
-                        </div>
-                        <p className="text-primary font-medium mb-1">{edu.institution}</p>
-                        <p className="text-muted-foreground text-sm mb-1">{edu.period}</p>
-                        <p className="text-muted-foreground text-sm font-medium">{edu.description}</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="hidden md:block flex-1" />
-              </div>
-            ))}
+          <div className="mt-5 grid gap-5 md:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
+            <div>
+              <h4 className="text-sm font-semibold">Relevant coursework (A / A−)</h4>
+              <ul className="mt-2 flex flex-wrap gap-1.5">
+                {relevantCoursework.map((course) => (
+                  <li key={course} className="tag">
+                    {course}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <h4 className="text-sm font-semibold">Also completed</h4>
+              <ul className="mt-2 flex flex-wrap gap-1.5">
+                {alsoCompleted.map((course) => (
+                  <li key={course} className="tag">
+                    {course}
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
-        </div>
+        </article>
 
-        {/* Honours & Awards */}
-        <div className="mt-20">
-          <div className="text-center mb-10">
-            <h3 className="text-2xl font-heading font-bold">
-              Honours & <span className="gradient-text">Awards</span>
-            </h3>
-          </div>
-          <div
-            className={`grid sm:grid-cols-2 gap-6 max-w-4xl mx-auto ${
-              isVisible ? 'reveal visible' : 'reveal'
-            }`}
-          >
-            {awards.map((award, index) => (
-              <div
-                key={award.title}
-                className="glass-card p-6 flex items-start gap-4 card-hover"
-                style={{ transitionDelay: `${index * 100 + 300}ms` }}
-              >
-                <div className="w-10 h-10 rounded-xl gradient-primary flex items-center justify-center flex-shrink-0">
-                  <Award size={20} className="text-white" />
-                </div>
-                <div>
-                  <h4 className="font-heading font-semibold mb-1">{award.title}</h4>
-                  <p className="text-muted-foreground text-sm">{award.detail}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+        <article className="card">
+          <h3 className="text-lg font-semibold">Intermediate (Pre-Engineering)</h3>
+          <p className="mt-1 text-sm text-muted-foreground">
+            Aga Khan Higher Secondary School, Seenlasht, Chitral · 2019 to 2021 · 885/1100 (80.5%)
+          </p>
+        </article>
       </div>
-    </section>
+    </Section>
   );
 }

@@ -22,3 +22,9 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Local-only files that must never be deployed (e.g. a resume that shows a phone number)
+/private
+
+# TypeScript incremental build info (created by `tsc -b`)
+*.tsbuildinfo

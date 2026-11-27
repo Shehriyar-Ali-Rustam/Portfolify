@@ -1,10 +1,15 @@
 import { useEffect, useRef, useState } from 'react';
 
-export function useScrollReveal(threshold = 0.1) {
+// Reveals content as soon as its top edge enters the viewport (not after 10% of a tall section is visible,
+// which left long sections blank on phones).
+export function useScrollReveal() {
   const ref = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
+    const element = ref.current;
+    if (!element) return;
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -12,15 +17,12 @@ export function useScrollReveal(threshold = 0.1) {
           observer.disconnect();
         }
       },
-      { threshold }
+      { threshold: 0, rootMargin: '0px 0px -40px 0px' }
     );
 
-    if (ref.current) {
-      observer.observe(ref.current);
-    }
-
+    observer.observe(element);
     return () => observer.disconnect();
-  }, [threshold]);
+  }, []);
 
   return { ref, isVisible };
 }

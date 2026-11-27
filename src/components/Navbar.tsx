@@ -1,113 +1,121 @@
-import { useState, useEffect } from 'react';
-import { Menu, X } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
+import { Download, Menu, X } from 'lucide-react';
+import ExtLink from './ExtLink';
+import { CV_URL, NAME } from '../site';
 
 const navLinks = [
-  { name: 'Home', href: '#home' },
   { name: 'About', href: '#about' },
-  { name: 'Education', href: '#education' },
-  { name: 'Skills', href: '#skills' },
+  { name: 'Research', href: '#research' },
+  { name: 'Publication', href: '#publication' },
   { name: 'Projects', href: '#projects' },
   { name: 'Experience', href: '#experience' },
+  { name: 'Education', href: '#education' },
+  { name: 'Awards', href: '#awards' },
   { name: 'Contact', href: '#contact' },
 ];
 
 export default function Navbar() {
-  const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState('home');
+  const [activeSection, setActiveSection] = useState('');
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
 
+  // Highlight whichever section crosses a thin band in the middle of the viewport.
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-
-      const sections = navLinks.map(link => link.href.substring(1));
-      for (const section of sections.reverse()) {
-        const element = document.getElementById(section);
-        if (element) {
-          const rect = element.getBoundingClientRect();
-          if (rect.top <= 150) {
-            setActiveSection(section);
-            break;
-          }
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) setActiveSection(entry.target.id);
         }
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+      },
+      { rootMargin: '-45% 0px -54% 0px' }
+    );
+    document.querySelectorAll('main section[id]').forEach((section) => observer.observe(section));
+    return () => observer.disconnect();
   }, []);
 
-  const handleLinkClick = (href: string) => {
-    setIsMenuOpen(false);
-    const element = document.querySelector(href);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
+  // Close the mobile menu on Escape (returning focus to the toggle) or when the desktop nav takes over.
+  useEffect(() => {
+    if (!isMenuOpen) return;
+    const desktop = window.matchMedia('(min-width: 1280px)');
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setIsMenuOpen(false);
+        menuButtonRef.current?.focus();
+      }
+    };
+    const onBreakpoint = () => desktop.matches && setIsMenuOpen(false);
+    window.addEventListener('keydown', onKeyDown);
+    desktop.addEventListener('change', onBreakpoint);
+    return () => {
+      window.removeEventListener('keydown', onKeyDown);
+      desktop.removeEventListener('change', onBreakpoint);
+    };
+  }, [isMenuOpen]);
+
+  const linkClass = (href: string) =>
+    activeSection === href.slice(1)
+      ? 'text-foreground underline decoration-primary decoration-2 underline-offset-8'
+      : 'text-muted-foreground hover:text-foreground';
 
   return (
-    <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled ? 'glass py-3' : 'py-5'
-      }`}
-    >
-      <nav className="container mx-auto px-4 flex items-center justify-between">
-        <a
-          href="#home"
-          className="font-logo text-2xl font-bold gradient-text"
-          onClick={(e) => {
-            e.preventDefault();
-            handleLinkClick('#home');
-          }}
-        >
-          Shehriyar
-        </a>
+    <header className="fixed inset-x-0 top-0 z-50 border-b bg-background/90 backdrop-blur">
+      <nav aria-label="Primary">
+        <div className="page-container flex h-16 items-center justify-between gap-4">
+          <a href="#top" className="font-heading text-base font-semibold text-foreground">
+            {NAME}
+          </a>
 
-        <ul className="hidden md:flex items-center gap-1">
-          {navLinks.map((link) => (
-            <li key={link.name}>
-              <a
-                href={link.href}
-                className={`nav-link ${activeSection === link.href.substring(1) ? 'active' : ''}`}
-                onClick={(e) => {
-                  e.preventDefault();
-                  handleLinkClick(link.href);
-                }}
-              >
-                {link.name}
-              </a>
-            </li>
-          ))}
-        </ul>
-
-        <button
-          className="md:hidden p-2 text-foreground"
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-          aria-label="Toggle menu"
-        >
-          {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
-
-        <div className={`mobile-menu ${isMenuOpen ? 'open' : ''}`}>
-          <div className="flex flex-col items-center justify-center h-full gap-8">
+          <ul className="hidden items-center xl:flex">
             {navLinks.map((link) => (
-              <a
-                key={link.name}
-                href={link.href}
-                className={`text-2xl font-medium transition-colors ${
-                  activeSection === link.href.substring(1)
-                    ? 'text-primary'
-                    : 'text-muted-foreground hover:text-foreground'
-                }`}
-                onClick={(e) => {
-                  e.preventDefault();
-                  handleLinkClick(link.href);
-                }}
-              >
-                {link.name}
-              </a>
+              <li key={link.href}>
+                <a
+                  href={link.href}
+                  aria-current={activeSection === link.href.slice(1) ? 'true' : undefined}
+                  className={`px-2.5 py-2 text-sm transition-colors ${linkClass(link.href)}`}
+                >
+                  {link.name}
+                </a>
+              </li>
             ))}
+          </ul>
+
+          <div className="flex items-center gap-2">
+            <ExtLink href={CV_URL} className="btn btn-primary btn-sm">
+              <Download size={16} aria-hidden />
+              <span className="sm:hidden">CV</span>
+              <span className="hidden sm:inline">Download CV (PDF)</span>
+            </ExtLink>
+            <button
+              ref={menuButtonRef}
+              type="button"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-md text-foreground hover:bg-secondary xl:hidden"
+              aria-expanded={isMenuOpen}
+              aria-controls="mobile-menu"
+              onClick={() => setIsMenuOpen((open) => !open)}
+            >
+              <span className="sr-only">Menu</span>
+              {isMenuOpen ? <X size={22} aria-hidden /> : <Menu size={22} aria-hidden />}
+            </button>
           </div>
+        </div>
+
+        {/* `hidden` takes the closed menu out of the tab order. Don't add a utility that sets display
+            (block, flex): it would override the attribute and leave invisible links focusable. */}
+        <div id="mobile-menu" hidden={!isMenuOpen} className="max-h-[calc(100vh-4rem)] overflow-y-auto border-t bg-background xl:hidden">
+          <ul className="page-container py-2">
+            {navLinks.map((link) => (
+              <li key={link.href}>
+                <a
+                  href={link.href}
+                  aria-current={activeSection === link.href.slice(1) ? 'true' : undefined}
+                  className={`block py-3 text-base ${linkClass(link.href)}`}
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  {link.name}
+                </a>
+              </li>
+            ))}
+          </ul>
         </div>
       </nav>
     </header>
