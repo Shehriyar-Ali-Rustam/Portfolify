@@ -11,25 +11,26 @@ import Awards from '../components/Awards';
 import Skills from '../components/Skills';
 import Contact from '../components/Contact';
 import Footer from '../components/Footer';
+import BackgroundAnimation from '../components/BackgroundAnimation';
 import ScrollToTop from '../components/ScrollToTop';
 import { SITE_TITLE } from '../site';
 
 export default function HomePage() {
   useEffect(() => {
     document.title = SITE_TITLE;
-    // Sections are rendered by JavaScript, so on a fresh load of /#research the browser
-    // can try to jump before the section exists. Jump once it does.
+    // Sections render client-side, so a fresh load of /#research may need a nudge to land on it.
     const id = window.location.hash.slice(1);
     if (id) document.getElementById(id)?.scrollIntoView({ behavior: 'instant' });
   }, []);
 
   return (
-    <>
-      <a href="#main" className="skip-link">
+    <div className="min-h-screen bg-background text-foreground">
+      <a href="#about" className="skip-link">
         Skip to content
       </a>
+      <BackgroundAnimation />
       <Navbar />
-      <main id="main" tabIndex={-1} className="focus:outline-none">
+      <main>
         <Hero />
         <About />
         <Research />
@@ -43,6 +44,6 @@ export default function HomePage() {
       </main>
       <Footer />
       <ScrollToTop />
-    </>
+    </div>
   );
 }

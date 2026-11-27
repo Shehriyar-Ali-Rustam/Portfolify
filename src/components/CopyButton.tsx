@@ -7,7 +7,7 @@ interface CopyButtonProps {
   className?: string;
 }
 
-export default function CopyButton({ text, label, className = 'btn btn-outline' }: CopyButtonProps) {
+export default function CopyButton({ text, label, className = 'btn-outline flex items-center gap-2' }: CopyButtonProps) {
   const [status, setStatus] = useState<'idle' | 'copied' | 'failed'>('idle');
   const resetTimer = useRef<number | undefined>(undefined);
 

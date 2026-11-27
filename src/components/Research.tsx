@@ -1,6 +1,6 @@
-import { FileText, Github } from 'lucide-react';
-import ExtLink from './ExtLink';
-import Section from './Section';
+import { Target, ShieldCheck, Timer, Sun, Cpu, FileText, Github } from 'lucide-react';
+import { useScrollReveal } from '../hooks/useScrollReveal';
+import SectionHeader from './SectionHeader';
 import { PAPER_URL, PERCEPTION_CODE_URL, VEHICLE_CODE_URL } from '../site';
 
 const details = [
@@ -17,152 +17,149 @@ const details = [
     text: 'Custom dataset of 10,000+ campus images, annotated in CVAT; YOLOv8-Nano trained for pedestrian, vehicle and obstacle detection.',
   },
   {
-    term: 'Team and my part',
+    term: 'Team & my part',
     text: 'Team project with Sardar Shahzeb Khan and Saqib Nawaz Khan. My part: sensor-based navigation integration, embedded control logic and the machine-learning pipeline.',
   },
-  {
-    term: 'Grades',
-    text: 'Final-year project Part I: A−, Part II: A.',
-  },
+  { term: 'Grades', text: 'Final-year project Part I: A−, Part II: A.' },
 ];
 
 const results = [
-  { label: 'mAP@0.5 (YOLOv8-Nano)', value: '84.7%', note: '54.8% mAP@0.5:0.95' },
-  { label: 'Obstacle-avoidance success', value: '94%', note: 'over 50 controlled trials' },
-  { label: 'Response time', value: '487 ± 42', unit: 'ms' },
-  { label: 'Solar harvest', value: '200 ± 15', unit: 'Wh/day', note: '14-day field test in Islamabad' },
+  { icon: Target, value: '84.7%', label: 'mAP@0.5', note: '54.8% mAP@0.5:0.95' },
+  { icon: ShieldCheck, value: '94%', label: 'Obstacle-avoidance success', note: 'over 50 controlled trials' },
+  { icon: Timer, value: '487 ± 42 ms', label: 'Response time' },
+  { icon: Sun, value: '200 ± 15 Wh/day', label: 'Solar harvest', note: '14-day field test in Islamabad' },
 ];
 
-// Detector speed on each platform. One series, so the caption names it instead of a legend.
-const FPS_MAX = 28;
 const fps = [
-  { platform: 'Raspberry Pi 4 (on-device)', value: 0.8, emphasis: true },
-  { platform: 'Laptop (offloaded)', value: 28, emphasis: false },
+  { platform: 'Raspberry Pi 4 (on-device)', value: 0.8 },
+  { platform: 'Laptop (offloaded)', value: 28 },
 ];
 
 type Media =
-  | { kind: 'image'; src: string; alt: string; width: number; height: number; caption?: string }
-  | { kind: 'video'; src: string; poster?: string; label: string; caption?: string };
+  | { kind: 'image'; src: string; alt: string; width: number; height: number }
+  | { kind: 'video'; src: string; poster?: string; label: string };
 
 // TODO(portfolio): add 1 to 3 photos of the vehicle, a detection screenshot and/or a short demo video.
-// Put the files in public/images/research/ (WebP for photos, ~1200px wide) and list them here, e.g.
+// Put the files in public/images/research/ (WebP, ~1200px wide) and list them here, e.g.
 //   { kind: 'image', src: '/images/research/vehicle.webp', alt: 'The solar-powered vehicle on a CUST campus road', width: 1200, height: 800 },
-//   { kind: 'video', src: '/images/research/demo.mp4', poster: '/images/research/demo-poster.webp', label: 'Demo: obstacle avoidance on campus' },
-// Blur any faces or number plates you don't have permission to publish. The gallery stays hidden while this is empty.
+// The gallery stays hidden while this is empty.
 const media: Media[] = [];
 
 export default function Research() {
+  const { ref, isVisible } = useScrollReveal();
+
   return (
-    <Section
-      id="research"
-      title="Research: Autonomous Solar Vehicle for Community Transport"
-      subtitle="Final-year research project · CUST, Islamabad · 2025 to 2026 · Supervisor: Syed Awais Haider"
-    >
-      <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,26rem)]">
-        <div>
-          <dl className="prose-width space-y-5">
-            {details.map((item) => (
-              <div key={item.term}>
-                <dt className="eyebrow">{item.term}</dt>
-                <dd className="mt-1 leading-relaxed text-foreground/85">{item.text}</dd>
-              </div>
-            ))}
-          </dl>
+    <section id="research" aria-labelledby="research-heading" className="section relative overflow-hidden bg-card/30">
+      <div className="container mx-auto">
+        <SectionHeader
+          id="research"
+          lead="Research:"
+          accent="Autonomous Solar Vehicle"
+          subtitle="For community transport · Final-year research project · CUST, Islamabad · 2025 to 2026 · Supervisor: Syed Awais Haider"
+        />
 
-          <div className="mt-8 flex flex-wrap gap-3">
-            <ExtLink href={PAPER_URL} className="btn btn-primary">
-              <FileText size={16} aria-hidden />
-              Read the paper
-            </ExtLink>
-            <ExtLink href={VEHICLE_CODE_URL} className="btn btn-outline">
-              <Github size={16} aria-hidden />
-              Code: vehicle control
-            </ExtLink>
-            <ExtLink href={PERCEPTION_CODE_URL} className="btn btn-outline">
-              <Github size={16} aria-hidden />
-              Code: YOLOv8 perception
-            </ExtLink>
-          </div>
-        </div>
-
-        <div>
-          <h3 className="text-base font-semibold">Results</h3>
-          <dl className="mt-4 grid grid-cols-2 gap-3">
-            {results.map((result) => (
-              <div key={result.label} className="rounded-lg border bg-card p-4">
-                <dt className="text-xs text-muted-foreground">{result.label}</dt>
-                <dd className="mt-1">
-                  <span className="whitespace-nowrap text-2xl font-semibold">{result.value}</span>
-                  {result.unit && <span className="text-sm font-medium text-foreground/85"> {result.unit}</span>}
-                </dd>
-                {result.note && <dd className="mt-1 text-xs text-muted-foreground">{result.note}</dd>}
-              </div>
-            ))}
-          </dl>
-        </div>
-      </div>
-
-      <div className="card mt-10">
-        <h3 className="text-base font-semibold">Open problem and next step</h3>
-        <p className="prose-width mt-2 leading-relaxed text-foreground/85">
-          On-device inference was the bottleneck: <strong className="font-semibold text-foreground">0.8 FPS on the
-          Raspberry Pi vs 28 FPS offloaded to a laptop</strong>. Next step: model compression, quantisation and
-          edge-efficient perception.
-        </p>
-
-        <figure className="mt-6 max-w-3xl">
-          <figcaption className="text-xs text-muted-foreground">Detector speed, frames per second</figcaption>
-          <div className="mt-3 space-y-4">
-            {fps.map((row) => (
-              <div
-                key={row.platform}
-                className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-x-4 gap-y-1.5 sm:grid-cols-[13rem_minmax(0,1fr)_4.5rem]"
-              >
-                <span className="text-sm text-foreground/85">{row.platform}</span>
-                <div aria-hidden className="col-span-2 row-start-2 h-3 sm:col-span-1 sm:col-start-2 sm:row-start-1">
-                  <div
-                    className={`h-3 rounded-r ${row.emphasis ? 'bg-primary' : 'bg-[hsl(var(--border-strong))]'}`}
-                    style={{ width: `${(row.value / FPS_MAX) * 100}%` }}
-                  />
+        <div ref={ref} className={`grid lg:grid-cols-2 gap-10 ${isVisible ? 'reveal visible' : 'reveal'}`}>
+          <div className="glass-card p-6 md:p-8">
+            <dl className="space-y-5">
+              {details.map((item) => (
+                <div key={item.term}>
+                  <dt className="text-primary text-sm font-semibold uppercase tracking-wider">{item.term}</dt>
+                  <dd className="mt-1 text-muted-foreground leading-relaxed">{item.text}</dd>
                 </div>
-                <span className="col-start-2 row-start-1 text-right text-sm font-semibold sm:col-start-3">
-                  {row.value} FPS
-                </span>
-              </div>
-            ))}
-          </div>
-        </figure>
-      </div>
+              ))}
+            </dl>
 
-      {media.length > 0 && (
-        <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {media.map((item) => (
-            <figure key={item.src}>
-              {item.kind === 'image' ? (
+            <div className="flex flex-wrap gap-3 mt-8">
+              <a href={PAPER_URL} target="_blank" rel="noopener noreferrer" className="btn-primary flex items-center gap-2 text-sm">
+                <FileText size={16} />
+                Read the paper
+              </a>
+              <a href={VEHICLE_CODE_URL} target="_blank" rel="noopener noreferrer" className="btn-outline flex items-center gap-2 text-sm">
+                <Github size={16} />
+                Code: vehicle control
+              </a>
+              <a href={PERCEPTION_CODE_URL} target="_blank" rel="noopener noreferrer" className="btn-outline flex items-center gap-2 text-sm">
+                <Github size={16} />
+                Code: YOLOv8 perception
+              </a>
+            </div>
+          </div>
+
+          <div className="space-y-6">
+            <div className="grid sm:grid-cols-2 gap-4">
+              {results.map((result, index) => (
+                <div
+                  key={result.label}
+                  className={`glass-card p-5 card-hover ${isVisible ? 'reveal visible' : 'reveal'}`}
+                  style={{ transitionDelay: `${index * 100}ms` }}
+                >
+                  <div className="w-10 h-10 rounded-xl gradient-primary flex items-center justify-center mb-3">
+                    <result.icon size={20} className="text-white" />
+                  </div>
+                  <p className="text-2xl font-heading font-bold gradient-text">{result.value}</p>
+                  <p className="text-sm font-medium mt-1">{result.label}</p>
+                  {result.note && <p className="text-xs text-muted-foreground mt-1">{result.note}</p>}
+                </div>
+              ))}
+            </div>
+
+            <div className="glass-card p-6 glow">
+              <div className="flex items-center gap-3 mb-3">
+                <div className="w-10 h-10 rounded-xl gradient-primary flex items-center justify-center flex-shrink-0">
+                  <Cpu size={20} className="text-white" />
+                </div>
+                <h3 className="font-heading font-semibold text-lg">Open problem &amp; next step</h3>
+              </div>
+              <p className="text-muted-foreground text-sm leading-relaxed">
+                On-device inference was the bottleneck:{' '}
+                <span className="text-foreground font-medium">0.8 FPS on the Raspberry Pi vs 28 FPS offloaded to a laptop</span>.
+                Next step: model compression, quantisation and edge-efficient perception.
+              </p>
+              <div className="mt-5 space-y-3" aria-label="Detector speed: 0.8 FPS on the Raspberry Pi 4, 28 FPS on a laptop">
+                {fps.map((row) => (
+                  <div key={row.platform}>
+                    <div className="flex justify-between text-xs mb-1">
+                      <span className="text-muted-foreground">{row.platform}</span>
+                      <span className="font-semibold">{row.value} FPS</span>
+                    </div>
+                    <div className="skill-progress">
+                      <div className="skill-progress-bar" style={{ width: isVisible ? `${(row.value / 28) * 100}%` : '0%' }} />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {media.length > 0 && (
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-10">
+            {media.map((item) =>
+              item.kind === 'image' ? (
                 <img
+                  key={item.src}
                   src={item.src}
                   alt={item.alt}
                   width={item.width}
                   height={item.height}
                   loading="lazy"
-                  decoding="async"
-                  className="h-auto w-full rounded-lg border object-cover"
+                  className="w-full h-auto rounded-2xl glass-card object-cover"
                 />
               ) : (
                 <video
+                  key={item.src}
                   src={item.src}
                   poster={item.poster}
                   aria-label={item.label}
                   controls
                   preload="none"
-                  className="h-auto w-full rounded-lg border"
+                  className="w-full rounded-2xl glass-card"
                 />
-              )}
-              {item.caption && <figcaption className="mt-2 text-xs text-muted-foreground">{item.caption}</figcaption>}
-            </figure>
-          ))}
-        </div>
-      )}
-    </Section>
+              )
+            )}
+          </div>
+        )}
+      </div>
+    </section>
   );
 }
